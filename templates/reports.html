@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block main %}
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark justify-content-end">
+        <a class="navbar-brand" href="/">
+            <img src="assets/images/logo.png" width="50" height="35" alt="">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" style="color: black !important;" href="/reports">Reports<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        <ul class="nav nav-pills ml-auto">
+            <li>
+                <a class="nav-link" href="/logout">Logout<span class="sr-only" style="text-decoration: none;"></span></a>
+            </li>
+        </ul>
+      </div>
+    </nav>	
+
+    <div class="container">
+        {% if interval_img %}
+            <div class="container-graph">
+                <img src={{interval_img}} alt="Your Cycle Length History" class="graph">
+            </div>
+        {% endif %}
+        {% if length_img %}
+            <div class="container-graph">
+                <img src={{length_img}} alt="Your Period Length History" class="graph">
+            </div>
+        {% endif %}
+        {% if not interval_img or not length_img %}
+            <h1 class="no-stats">No statistics found. Please log a period.</h1>
+        {% endif %}
+    </div>
+</body>
+
+{% endblock %}

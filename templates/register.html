@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block main %}
+
+<body class="home">
+    <main class="container p-5">
+        <div class="container-fluid container-register">
+            <div class="brand">
+                <h1>PERIOD</h1>
+                <img src="assets/images/logo.png" alt="Logo" class="logo_login">
+            </div>
+
+            <div class="form">
+                <form action="/register" method="post" class="col-sm-6">
+                    <div class="form-group">
+                        <input class="form-control" name="email" placeholder="Email" type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="password" placeholder="Password" type="password" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="password_again" placeholder="Password (Again)" type="password" required>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Register</button>
+                </form>
+                <p class="register_intro">Already have an account?
+                    <span>
+                        <a href="/login">
+                            <span style="color:red; font-weight: bold;">Log in now.</span>
+                        </a>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+    
+{% endblock %}

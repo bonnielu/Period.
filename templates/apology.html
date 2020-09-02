@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}{{error}}{% endblock %}
+
+{% block main %}
+
+<body class="login">
+    <div class="container oops">
+        <h1 class="error-heading">{{error}}</h1>
+        <h1 class="error-subheading">{{e_message}}</h1>
+        <a href="/" class="btn btn-primary btn-block error-btn">Back to Home</a>
+    </div>
+</body>
+
+{% endblock %}
