@@ -1,0 +1,343 @@
+
+<!-- FullCalendar Snippet by Creative Tim
+	https://www.creative-tim.com/product/full-calendar
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Period: Home</title>
+
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<!-- Bootstrap css-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<!-- Fullcalendar css -->
+	<link href='/assets/css/fullcalendar.css' rel='stylesheet' />
+	<link href='assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link href="/assets/css/styles.css" rel="stylesheet" >
+	<!-- Bootstrap jquery -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<!-- Jquery assets for fullcalendar -->
+	<script src='assets/js/jquery-1.10.2.js'></script>
+	<script src='assets/js/jquery-ui.custom.min.js'></script>
+	<script src='assets/js/fullcalendar.js'></script>
+
+	<!-- Handles alerts -->
+	{% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class=alert-div>
+                <div class="alert fade show alert-{{ category }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <!-- <strong>Title</strong> --> {{ message }}
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+	<script>
+		$(document).ready(function() {
+			var date = new Date();
+			var d = date.getDate();
+			var m = date.getMonth();
+			var y = date.getFullYear();
+
+			/*  className colors
+
+			className: default(transparent), important(red), chill(pink), success(green), info(blue)
+
+			*/
+
+
+			/* initialize the external events
+			-----------------------------------------------------------------*/
+
+			$('#external-events div.external-event').each(function() {
+
+				// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+				// it doesn't need to have a start or end
+				var eventObject = {
+					title: $.trim($(this).text()) // use the element's text as the event title
+				};
+
+				// store the Event Object in the DOM element so we can get to it later
+				$(this).data('eventObject', eventObject);
+
+				// make the event draggable using jQuery UI
+				$(this).draggable({
+					zIndex: 999,
+					revert: true,      // will cause the event to go back to its
+					revertDuration: 0  //  original position after the drag
+				});
+
+			});
+
+			/* initialize the calendar
+			-----------------------------------------------------------------*/
+			var dates = [];
+			
+			// User's previous logs
+			if ({{prev_events|safe}}) {
+				for (i = 0; i < {{count}}; i++) {
+					prev_events = {{prev_events|safe}};
+					console.log(prev_events);
+					start = prev_events[i][0];
+					console.log(start);
+					end = prev_events[i][1];
+					dates.push({title:"Period", start:start, end:end, allDay:true, className:"chill"});
+				}
+			}
+
+			// Repeating event
+
+			if ({{avg_interval}}) 
+			{
+				startDay = new Date('{{startDay}}');
+				var r_day = startDay.getDate()+1; 
+				var r_month = startDay.getMonth();
+				var r_year = startDay.getFullYear(startDay);
+
+				for (i = 0; i < 24; i++)
+				{
+					dates.push({
+						id: 999,
+						title: 'Upcoming Period',
+						start: new Date(r_year, r_month, r_day),
+						end: new Date(r_year, r_month, r_day+{{avg_length}}),
+						allDay: true,
+						className: 'important'
+					});
+					r_day = r_day + {{avg_interval}} + {{avg_length}};
+				}
+			}
+
+			var calendar =  $('#calendar').fullCalendar({
+
+				header: {
+					left: 'today',
+					center: 'title',
+					right: 'prev,next'
+				},
+				editable: true,
+				firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+				selectable: false,
+				defaultView: 'month',
+
+				axisFormat: 'h:mm',
+				columnFormat: {
+					month: 'ddd',    // Mon
+					week: 'ddd d', // Mon 7
+					day: 'dddd M/d',  // Monday 9/7
+					agendaDay: 'dddd d'
+				},
+				titleFormat: {
+					month: 'MMMM yyyy', // September 2009
+					week: "MMMM yyyy", // September 2009
+					day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
+				},
+				allDaySlot: false,
+				selectHelper: true,
+				select: function(start, end, allDay) {
+					var title = prompt('Event Title:');
+					if (title) {
+						calendar.fullCalendar('renderEvent',
+							{
+								title: title,
+								start: start,
+								end: end,
+								allDay: allDay
+							},
+							true // make the event "stick"
+						);
+					}
+					calendar.fullCalendar('unselect');
+				},
+				droppable: true, // this allows things to be dropped onto the calendar !!!
+				drop: function(date, allDay) { // this function is called when something is dropped
+
+					// retrieve the dropped element's stored Event Object
+					var originalEventObject = $(this).data('eventObject');
+
+					// we need to copy it, so that multiple events don't have a reference to the same object
+					var copiedEventObject = $.extend({}, originalEventObject);
+
+					// assign it the date that was reported
+					copiedEventObject.start = date;
+					copiedEventObject.allDay = allDay;
+
+					// render the event on the calendar
+					// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+					$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+					// is the "remove after drop" checkbox checked?
+					if ($('#drop-remove').is(':checked')) {
+						// if so, remove the element from the "Draggable Events" list
+						$(this).remove();
+					}
+
+				},
+				
+				events: dates
+			});
+		});
+
+		// Triggers focus on modal
+		$('#myModal').on('shown.bs.modal', function () {
+			$('#myInput').trigger('focus')
+			})
+
+	</script>
+	<style>
+
+		body {
+			text-align: center;
+			font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
+			}
+
+		#wrap {
+			width: 1100px;
+			margin: 0 auto;
+			}
+
+		#external-events {
+			float: left;
+			width: 150px;
+			padding: 0 10px;
+			text-align: left;
+			}
+
+		#external-events h4 {
+			font-size: 16px;
+			margin-top: 0;
+			padding-top: 1em;
+			}
+
+		.external-event { /* try to mimick the look of a real event */
+			margin: 10px 0;
+			padding: 2px 4px;
+			background: #3366CC;
+			color: #fff;
+			font-size: .85em;
+			cursor: pointer;
+			}
+
+		#external-events p {
+			margin: 1.5em 0;
+			font-size: 11px;
+			color: #666;
+			}
+
+		#external-events p input {
+			margin: 0;
+			vertical-align: middle;
+			}
+
+		#calendar {
+			float: left; 
+			width: 900px;
+			background-color: #FFFFFF;
+			border-radius: 6px;
+			box-shadow: 0 1px 2px #C3C3C3; 
+			margin-left: -5%;
+			margin-top: 2.5%;
+			margin-bottom: 2.5%;
+		}
+
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark justify-content-end">
+	<a class="navbar-brand" href="/">
+		<img src="assets/images/logo.png" width="50" height="35" alt="">
+	</a>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="nav nav-pills">
+			<li class="nav-item active">
+				<a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/reports">Reports</a>
+			</li>
+		</ul>
+	<ul class="nav nav-pills ml-auto">
+		<li>
+			<a class="nav-link" href="/logout">Logout<span class="sr-only" style="text-decoration: none;"></span></a>
+		</li>
+	</ul>
+  </div>
+</nav>	
+
+<div id='wrap'>
+
+<div id='calendar'></div>
+
+<div style='clear:both'></div>
+</div>
+
+<div class="stats">
+	<div class="col">
+		<div class="row">
+			<button type="button" class="btn btn-primary btn-block log-period" data-toggle="modal" data-target="#exampleModal">
+				Log Period
+			</button>
+		</div>
+		<div class="card bg-light mb-3" style="max-width: 18rem;">
+			<div class="card-header">Predicted Start of Next Period</div>
+			<div class="card-body">
+			  <h1 class="card-title">{{startDay}}</h1>
+			</div>
+		</div>
+		<div class="card bg-light mb-3" style="max-width: 18rem;">
+			<div class="card-header">Average Length of Cycle</div>
+			<div class="card-body">
+			  <h1 class="card-title">{{avg_interval}}</h1>
+			  <h5 class="card-text">DAYS</h5>
+			</div>
+		</div>
+		<div class="card bg-light mb-3" style="max-width: 18rem;">
+			<div class="card-header">Average Length of Period</div>
+			<div class="card-body">
+			  <h1 class="card-title">{{avg_length}}</h1>
+			  <h5 class="card-text">DAYS</h5>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Button trigger modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Log Period</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<form action="/" method="post">
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="start">Start Date:</label>
+					<input type="date" id="start" name="start" class="required">
+				</div>
+				<div class="form-group">
+					<label for="end">End Date:</label>
+					<input type="date" id="end" name="end" class="required">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary btn-block">Save</button>
+			</div>
+		</form>
+	  </div>
+	</div>
+  </div>
+
+</body>
+</html>

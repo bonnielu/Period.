@@ -1,0 +1,190 @@
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5%;
+    margin-top: -10%;
+}
+
+.logo_login {
+    max-width: 90px;
+    max-height: 90px;
+    margin-left: -2%;
+}
+
+div.form {
+    display: block;
+    text-align: center;
+}
+
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.btn-primary {
+    background:rgb(180, 0, 0);
+    color: #ffffff;
+    border: rgb(180, 0, 0);
+    border-radius: 50px;
+    padding: 10px 0;
+}
+ 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background:darkred;
+}
+
+.btn-primary:active:focus {
+    color: #ffffff; 
+    background-color: darkred !important; 
+    border-color: darkred !important;
+  }
+
+.container-login {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(241, 150, 150, 0.19);
+    border-radius: 25px;
+    padding: 20% 0;
+    position: relative;
+    margin-top: 5%;
+}
+
+.container-register {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(241, 150, 150, 0.19);
+    border-radius: 25px;
+    padding: 20% 0;
+    position: relative;
+}
+
+.form-group {
+    margin-bottom: 5%;
+}
+
+.form-control {
+    border-radius: 25px;
+}
+
+.register_intro {
+    margin-top: 2.5%;
+    margin-bottom: -10%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+body.login {
+    background-image: url('../../assets/images/login_background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: 100;
+}
+
+.stats {
+    position: absolute;
+    right: 50px;
+    top: 125px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.card {
+    margin-top: 15%;
+    color: white;
+}
+
+.bg-light {
+    background-color:#cc4125 !important;
+}
+ 
+.card-header {
+    background-color: #990000 !important;
+}
+
+.navbar {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    position: relative;
+    z-index: 0;
+}
+
+.bg-dark {
+    background-color: rgb(255, 219, 219) !important;
+}
+
+/* A link that has not been visited */
+a:link {
+    color: black;
+}
+/* A link that has been visited */
+a:visited {
+    color: black;
+}
+/* A link that is hovered on */
+a:hover {
+    color: black;
+}
+/* A link that is selected */
+a:active {
+    color: black;
+}
+
+.active {
+    background-color: rgb(255, 162, 162) !important;
+    border-radius: 5px;;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: rgb(255, 189, 189) !important;
+  }
+
+.alert {
+    position: relative;
+    top: 20px;
+    left: -50%;
+}
+
+.alert-div {
+    position: absolute;
+    z-index: 2;
+    left: 50%
+}
+
+.error-heading {
+    font-size: 2000%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.oops {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+.error-subheading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-btn {
+    margin-top: 5%;
+    color: white !important;
+}
+
+.container-graph {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(241, 150, 150, 0.19);
+    border-radius: 25px;
+    padding: 2.5% 0;
+    position: relative;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.alert-danger {
+    background-color: #990000 !important;
+    color: white;
+}
