@@ -18,3 +18,5 @@ This was my first experience working on the back-end of a web application and my
 * Implement Google Calendar's incremental authorizations
 
 <img style="display: inline" src="templates/assets/images/login_page.png" alt="Login Page" width="100%">
+<img style="display: inline" src="templates/assets/images/home_page.png" alt="Home Page" width="100%">
+<img style="display: inline" src="templates/assets/images/stats_page.png" alt="Reports Page" width="100%">
