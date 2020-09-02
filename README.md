@@ -17,4 +17,4 @@ This was my first experience working on the back-end of a web application and my
 * Exploring the use of neural networks to make increasingly accurate predictions — particularly for users with irregular periods
 * Implement Google Calendar's incremental authorizations
 
-
+<img style="display: inline" src="/templates/assets/images/login_page" alt="Login Page" width="30%">
